@@ -1,9 +1,18 @@
 import React from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  Breadcrumb,
+  BreadcrumbItem,
+} from "reactstrap";
+import { Link } from "react-router-dom";
 
-function RenderComments({ dish }) {
-  if (dish != null && dish.comments != null) {
-    const comment = dish.comments.map((comment) => {
+function RenderComments({ comments }) {
+  if (comments != null) {
+    const comment = comments.map((comment) => {
       const dateOptions = { year: "numeric", month: "short", day: "2-digit" };
       const formattedDate = new Date(comment.date).toLocaleDateString(
         "en-US",
@@ -44,12 +53,24 @@ function RenderDish({ dish }) {
 }
 
 const DishDetail = (props) => {
-  const selectedDish = props.dish;
+  //const selectedDish = props.dish;
   return (
     <div className="container">
       <div className="row">
-        <RenderDish dish={selectedDish} />
-        <RenderComments dish={selectedDish} />
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to="/menu">Menu</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+        </Breadcrumb>
+        <div className="col-12">
+          <h3>{props.dish.name}</h3>
+          <hr />
+        </div>
+      </div>
+      <div className="row">
+        <RenderDish dish={props.dish} />
+        <RenderComments comments={props.comments} />
       </div>
     </div>
   );
