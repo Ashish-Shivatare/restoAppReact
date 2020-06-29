@@ -53,7 +53,6 @@ function RenderDish({ dish }) {
 }
 
 const DishDetail = (props) => {
-  //const selectedDish = props.dish;
   return (
     <div className="container">
       <div className="row">
