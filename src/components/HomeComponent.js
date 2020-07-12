@@ -14,8 +14,13 @@ function RenderCard({ item, isLoading, errMess }) {
   if (isLoading) {
     return <Loading />;
   } else if (errMess) {
-    return <h4>{errMess}</h4>;
-  } else {
+    return (
+      <div className="row">
+        {" "}
+        <h4>{errMess}</h4>{" "}
+      </div>
+    );
+  } else if (item) {
     return (
       <Card>
         <CardImg src={baseUrl + item.image} alt={item.name} />
