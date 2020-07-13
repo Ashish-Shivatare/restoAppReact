@@ -19,6 +19,7 @@ import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 const maxLength = (len) => (val) => !val || val.length <= len;
 const minLength = (len) => (val) => val && val.length >= len;
@@ -155,12 +156,17 @@ function RenderComments({ comments, postComment, dishId }) {
         "en-US",
         dateOptions
       );
+
       return (
         <ul key={comment.id} className="list-unstyled">
-          <li>{comment.comment}</li>
-          <li>
-            --{comment.author}, {formattedDate}
-          </li>
+          <Stagger in>
+            <Fade In>
+              <li>{comment.comment}</li>
+              <li>
+                --{comment.author}, {formattedDate}
+              </li>
+            </Fade>
+          </Stagger>
         </ul>
       );
     });
@@ -178,13 +184,20 @@ function RenderDish({ dish }) {
   if (dish != null)
     return (
       <div className="col-12 col-md-5 m-1">
-        <Card>
-          <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-          <CardBody>
-            <CardTitle>{dish.name}</CardTitle>
-            <CardText>{dish.description}</CardText>
-          </CardBody>
-        </Card>
+        <FadeTransform
+          in
+          transformProps={{
+            exitTransform: "scale(0.5) translateY(-50%)",
+          }}
+        >
+          <Card>
+            <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+            <CardBody>
+              <CardTitle>{dish.name}</CardTitle>
+              <CardText>{dish.description}</CardText>
+            </CardBody>
+          </Card>
+        </FadeTransform>
       </div>
     );
   else return <div></div>;
