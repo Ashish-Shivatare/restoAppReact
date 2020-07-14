@@ -70,7 +70,13 @@ class Main extends Component {
     };
 
     const AboutPage = () => {
-      return <About leaders={this.props.leaders} />;
+      return (
+        <About
+          leaders={this.props.leaders}
+          leaderLoading={this.props.leaders.isLoading}
+          leaderErrMess={this.props.leaders.errMess}
+        />
+      );
     };
 
     const HomePage = () => {
