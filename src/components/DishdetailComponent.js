@@ -150,30 +150,30 @@ class CommentForm extends Component {
 
 function RenderComments({ comments, postComment, dishId }) {
   if (comments != null) {
-    const comment = comments.map((comment) => {
-      const dateOptions = { year: "numeric", month: "short", day: "2-digit" };
-      const formattedDate = new Date(comment.date).toLocaleDateString(
-        "en-US",
-        dateOptions
-      );
-
-      return (
-        <ul key={comment.id} className="list-unstyled">
-          <Stagger in>
-            <Fade In>
-              <li>{comment.comment}</li>
-              <li>
-                --{comment.author}, {formattedDate}
-              </li>
-            </Fade>
-          </Stagger>
-        </ul>
-      );
-    });
     return (
       <div className="col-12 col-md-5 m-1">
         <h4>Comments</h4>
-        {comment}
+        <ul className="list-unstyled">
+          <Stagger in>
+            {comments.map((comment) => {
+              return (
+                <Fade in>
+                  <li key={comment.id}>
+                    <p>{comment.comment}</p>
+                    <p>
+                      -- {comment.author} ,{" "}
+                      {new Intl.DateTimeFormat("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
+                      }).format(new Date(Date.parse(comment.date)))}
+                    </p>
+                  </li>
+                </Fade>
+              );
+            })}
+          </Stagger>
+        </ul>
         <CommentForm dishId={dishId} postComment={postComment} />
       </div>
     );
